@@ -8,7 +8,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
     const trailColor = "#00f";
     const maxTrailPoints = 12000;
+    const titleGlyphs = "✢✦✧✩✪✫✬✭✮✯✰✶✷✹✺✻✼✽❂❈❉❋❖";
     let speedMultiplier = Number(speedSlider?.value || 1);
+
+    const randomTitle = () =>
+        Array.from({ length: 7 }, () => titleGlyphs[Math.floor(Math.random() * titleGlyphs.length)]).join("");
+
+    document.title = randomTitle();
+    window.setInterval(() => {
+        document.title = randomTitle();
+    }, 333);
 
     const resizeCanvas = () => {
         canvas.width = Math.floor(window.innerWidth * deviceScale);
@@ -22,11 +31,21 @@ document.addEventListener("DOMContentLoaded", () => {
         context.lineJoin = "round";
     };
 
+    const getNodeCenter = (node) => {
+        const rect = node.getBoundingClientRect();
+
+        return {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+        };
+    };
+
     const buildState = () => {
         const rects = nodes.map((node) => node.getBoundingClientRect());
 
         return nodes.map((node, index) => {
             const rect = rects[index];
+            const center = getNodeCenter(node);
             const width = rect.width;
             const height = rect.height;
             const speed = 8 + Math.random() * 8;
@@ -49,8 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 y: rect.top,
                 trail: [
                     {
-                        x: rect.left + width / 2,
-                        y: rect.top + height / 2,
+                        x: center.x,
+                        y: center.y,
                     },
                 ],
                 speed,
@@ -72,14 +91,16 @@ document.addEventListener("DOMContentLoaded", () => {
             item.height = item.node.offsetHeight;
             item.x = clamp(item.x, 0, window.innerWidth - item.width);
             item.y = clamp(item.y, 0, window.innerHeight - item.height);
-            item.trail = [
-                {
-                    x: item.x + item.width / 2,
-                    y: item.y + item.height / 2,
-                },
-            ];
             item.node.style.left = `${item.x}px`;
             item.node.style.top = `${item.y}px`;
+
+            const center = getNodeCenter(item.node);
+            item.trail = [
+                {
+                    x: center.x,
+                    y: center.y,
+                },
+            ];
         });
     };
 
@@ -133,17 +154,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 item.heading = bounceHeadingVertically(item.heading);
             }
 
+            item.node.style.left = `${item.x}px`;
+            item.node.style.top = `${item.y}px`;
+
+            const center = getNodeCenter(item.node);
             item.trail.push({
-                x: item.x + item.width / 2,
-                y: item.y + item.height / 2,
+                x: center.x,
+                y: center.y,
             });
 
             if (item.trail.length > maxTrailPoints) {
                 item.trail.shift();
             }
-
-            item.node.style.left = `${item.x}px`;
-            item.node.style.top = `${item.y}px`;
         });
 
         drawTrails();

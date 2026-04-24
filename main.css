@@ -1,12 +1,29 @@
+@font-face {
+    font-family: "Apoc LC Revelations";
+    src: url("./fonts/ApocLC-Revelations.woff2") format("woff2"),
+         url("./fonts/ApocLC-Revelations.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
 body {
-    margin: 8px;
+    cursor: url("./content/images/cursor.png"), auto;
+    margin: 0;
     min-height: 100vh;
     overflow: hidden;
     background: #fff;
     /*color: #00f;*/
     font-family: "Times New Roman", Times, serif;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.2;
+}
+
+a:hover {
+    cursor: url("./content/images/pointer256.png") 128 0, url("./content/images/pointer32.png") 16 0, pointer;
+}
+
+div.floating-node {
+    padding: 15px 0px;
 }
 
 #trail-layer {
@@ -44,13 +61,13 @@ main {
 }
 
 h1 {
-    margin: 0.67em 0;
+    margin: 0;
     font-size: 2em;
     font-weight: 700;
 }
 
 p {
-    margin: 1em 0;
+    margin: 0;
 }
 
 a {
@@ -61,4 +78,56 @@ a {
 .floating-node {
     width: max-content;
     max-width: min(34rem, calc(100vw - 16px));
+}
+
+#cashin {
+    background: center / contain no-repeat url("./content/images/mushroom.png");
+}
+
+#bio {
+    background: center / contain no-repeat url("./content/images/butterfly.png");
+}
+
+#capricorn {
+    background: center / contain no-repeat url("./content/images/flare2.png");
+}
+
+#flower {
+    background: center / contain no-repeat url("./content/images/daisy.png");
+}
+
+#music {
+    background: center / contain no-repeat url("./content/images/music.png");
+}
+
+#bandcamp {
+    background: center / contain no-repeat url("./content/images/bubbles.png");
+}
+
+#soundcloud {
+    background: center / contain no-repeat url("./content/images/flare1.png");
+}
+
+#ninaprotocol {
+    background: center / contain no-repeat url("./content/images/blank.png");
+}
+
+#youtube {
+    background: center / contain no-repeat url("./content/images/blank.png");
+}
+
+#beautifulangel {
+    background: center / contain no-repeat url("./content/images/angelwings.png");
+}
+
+#news {
+    background: center / contain no-repeat url("./content/images/blank.png");
+}
+
+#email {
+    background: center / contain no-repeat url("./content/images/blueguy.png");
+}
+
+body.music {
+    display: inline-block;
 }
